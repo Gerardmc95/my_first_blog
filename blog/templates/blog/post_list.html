@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>¡Adivina el número!</title>
+    <link rel="stylesheet" href="{% static '/css/blog.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Courgette|Kalam&display=swap" rel="stylesheet">
+    
+  </head>
+
+
+  <body>
+    <div class="page-header">
+      <h1>¡Adivina el número!</h1>
+    </div>
+    
+    <p>Selecionamos un número del 1 al 100 aleatoriamente. ¿Podrás adivinarlo en 10 intentos?</p>
+    <p>Tranquilo, te ayudaremos diciéndote si el número ingresado es muy alto o muy bajo.</p>
+
+    <div class="form">
+      <label for="guessField">ADIVINA:</label><input type="text" id="guessField" class="guessField">
+      <input type="submit" value="Enviar número" class="guessSubmit">
+    </div>
+
+    <div class="resultParas">
+      <p class="guesses"></p>
+      <p class="lastResult"></p>
+      <p class="lowOrHi"></p>
+    </div>
+
+    <script>
+       let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+        const guesses = document.querySelector('.guesses');
+        const lastResult = document.querySelector('.lastResult');
+        const lowOrHi = document.querySelector('.lowOrHi');
+
+        const guessSubmit = document.querySelector('.guessSubmit');
+        const guessField = document.querySelector('.guessField');
+
+        let guessCount = 1;
+        let resetButton;
+        guessField.focus();
+
+        function checkGuess() {
+            let userGuess = Number(guessField.value);
+            if (guessCount === 1) {
+                guesses.textContent = 'Intentos anteriores: ';
+            }
+            guesses.textContent += userGuess + ' ';//Concatenación de intentos pasados
+            
+            if (userGuess === randomNumber) {
+                lastResult.textContent = '¡Felicidades! ¡Lo adivinaste!';
+                lastResult.style.backgroundColor = 'green';
+                lowOrHi.textContent = '';
+                setGameOver();
+            } else if (guessCount === 10) {
+                lastResult.textContent = '¡¡¡Fin del juego!!!';
+                setGameOver();
+            } else {
+                lastResult.textContent = '¡Equivocado!';
+                lastResult.style.backgroundColor = 'red';
+                if(userGuess < randomNumber) {
+                lowOrHi.textContent = '¡El numero es muy bajo!';
+                } else if(userGuess > randomNumber) {
+                lowOrHi.textContent = '¡El numero es muy grande!';
+                }
+            }
+        
+        guessCount++;
+        guessField.value = '';
+        guessField.focus();
+        }
+
+        guessSubmit.addEventListener('click', checkGuess);//Escuchador de evento
+
+        function setGameOver() {
+            guessField.disabled = true;
+            guessSubmit.disabled = true;
+            resetButton = document.createElement('button');
+            resetButton.textContent = 'Iniciar nuevo juego';
+            document.body.appendChild(resetButton);
+            resetButton.addEventListener('click', resetGame);
+            }
+
+        function resetGame() {
+            guessCount = 1;
+
+            const resetParas = document.querySelectorAll('.resultParas p');
+            for (let i = 0 ; i < resetParas.length ; i++) {
+                resetParas[i].textContent = '';
+            }
+
+            resetButton.parentNode.removeChild(resetButton);
+
+            guessField.disabled = false;
+            guessSubmit.disabled = false;
+            guessField.value = '';
+            guessField.focus();
+
+            lastResult.style.backgroundColor = 'white';
+
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            }
+    </script>
+    <br>
+
+    <div class="page-header">
+      <h1>Aquí comienzan los posts hechos con Django y Python3</h1>
+    </div>
+    
+
+    
+    <div class="content-container">
+      <div class="row">
+        <div class="col-md-8">
+          {% for post in posts %}
+            <div class="post">
+              <h2><a href="">{{ post.title }}</a></h2>
+              <p>{{ post.text|linebreaksbr }}</p>
+              <p> publicado: {{ post.published_date }}</p>  
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

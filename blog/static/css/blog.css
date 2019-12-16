@@ -1,0 +1,60 @@
+html{
+    background: rgb(216, 170, 100);
+}
+
+body{
+    width: 700px;
+    margin: 0 auto;
+    background-color: rgb(247, 220, 179);
+    padding: 0 20px 20px 20px;
+    border: 5px sold black;
+}
+
+.page-header {
+    background-color: rgb(240, 188, 111);
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+h1{
+    margin: 0;
+    padding: 15px 0;
+    color: #FAFA00;
+    text-shadow: 4px 4px 4px #CA0000;
+    /*border: 1px solid black;*/
+    font-family: 'Acme', sans-serif;
+    font-size: 40px;
+    text-align: center;
+}
+
+h2{
+    width: 650px;
+    font-family: 'Courgette', cursive;
+    font-size: 30px;
+    text-align: left;
+}
+.content-container{
+    background-color: rgb(241, 206, 153);
+    margin-top: 0;
+    padding: 20px 10px 20px 10px;
+}
+
+.lastResult {
+    color: white;
+    padding: 3px;
+  }
+
+p, .form{
+    color: rgb(117, 84, 35);
+    width: 650px;
+    font-size: 25px;
+    font-family: 'Kalam', cursive;
+    text-align: center;
+}
+
+
+img{
+    display: block;
+    margin: 0 auto;
+}
+
